@@ -17,13 +17,15 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create movie" do
     assert_difference('Movie.count') do
-      post movies_url, params: { movie: { genre_id: @movie.genre_id, name: @movie.name, rent_price: @movie.rent_price } }
+      post movies_url, params: { movie: { genre_id: 4, name: "nome", rent_price: 5.0 } }
     end
 
     assert_redirected_to movie_url(Movie.last)
   end
 
   test "should show movie" do
+    @movie = Movie.new(name:"teste", genre_id:0, rent_price: 5.0)
+    @movie.save
     get movie_url(@movie)
     assert_response :success
   end
@@ -34,7 +36,9 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update movie" do
-    patch movie_url(@movie), params: { movie: { genre_id: @movie.genre_id, name: @movie.name, rent_price: @movie.rent_price } }
+    @movie = Movie.new(name:"teste", genre_id:0, rent_price: 5.0)
+    @movie.save
+    patch movie_url(@movie), params: { movie: { genre_id: @movie.genre_id, name: "ola teste", rent_price: @movie.rent_price } }
     assert_redirected_to movie_url(@movie)
   end
 
